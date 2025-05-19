@@ -1,30 +1,51 @@
-
-
 // DOM elements
+const btn = document.getElementById("reset-button");
+const cells = document.querySelectorAll(".cell");
+const objective = document.getElementById("objective");
 
+let secretSpot;
 
+// Pick a random cell for battleship
+function pickSecretSpot() {
+  secretSpot = Math.floor(Math.random() * cells.length);
+}
 
-const cell = document.querySelectorAll(".cell");
-console.log(cell);
-const btn = document.querySelector(".btn");
-console.log(btn);
-
-
-// add event listeners to each cell 
-cell.forEach((cell) => {
-  cell.addEventListener("click", () => {
-    cell.classList.toggle("active");
-    console.log(cell.innerText);
+// Reset the game
+function resetGame() {
+  cells.forEach((cell, idx) => {
+    cell.classList.remove("hit", "miss");
+    cell.innerText = `BS${idx + 1}`;
+    cell.style.pointerEvents = "auto";
   });
+  pickSecretSpot();
+  objective.textContent = "Find the Battleship";
+}
+
+// Handle cell click
+function handleCellClick(e) {
+  const idx = Array.from(cells).indexOf(e.target);
+  if (idx === secretSpot) {
+    e.target.classList.add("hit");
+    e.target.innerText = "Hit!";
+    objective.textContent = "You hit the battleship!";
+    // Optionally disable all cells after hit
+    cells.forEach(cell => cell.style.pointerEvents = "none");
+  } else {
+    e.target.classList.add("miss");
+    e.target.innerText = "Miss!";
+    objective.textContent = "You missed the battleship!";
+    e.target.style.pointerEvents = "none";
+  }
+}
+
+// Add event listeners to each cell
+cells.forEach(cell => {
+  cell.addEventListener("click", handleCellClick);
 });
 
-// function to make only one cell to be active at a time randomly with colors change if correct cell is clicked
-function randomCell() {
-  const randomIndex = Math.floor(Math.random() * cell.length);
-  cell.forEach((cell) => {
-    cell.classList.remove("active");
-    cell.style.backgroundColor = "white";
-  });
-  cell[randomIndex].classList.add("active");
-  cell[randomIndex].style.backgroundColor = "green";
-}
+// Reset button on click
+btn.addEventListener("click", resetGame);
+
+// Initialize game
+resetGame();
+

@@ -51,12 +51,3 @@ h1 {
     cursor: pointer;
 }
 
- /* Classes for selection states */
- .correct {
-            background-color: #2ecc71 !important; /* Green for correct */
-            transition: background-color 0.3s ease;
-        }
- .incorrect {
-            background-color: #e74c3c !important; /* Red for incorrect */
-            transition: background-color 0.3s ease;
-        }
