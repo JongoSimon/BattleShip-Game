@@ -1,0 +1,62 @@
+
+body {
+    background-image: url('https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/ncom/software/switch/70010000015008/f398ff3a04730c763baffbb20e77645138bf58a69d24a2031a19661c7132706c');
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f5f5f5;
+}
+h1 {
+    color: blue;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;    
+
+}
+
+.grid {
+    display: grid; 
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 1px; 
+    
+}
+.cell {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin: 2px;
+    font-size: 24px;
+    background-color: navy;
+    cursor: pointer;
+}
+
+.btn {
+    background-color: #4CAF50; /* Green */
+    border-radius: 5px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+ /* Classes for selection states */
+ .correct {
+            background-color: #2ecc71 !important; /* Green for correct */
+            transition: background-color 0.3s ease;
+        }
+ .incorrect {
+            background-color: #e74c3c !important; /* Red for incorrect */
+            transition: background-color 0.3s ease;
+        }
