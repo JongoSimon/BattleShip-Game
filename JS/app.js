@@ -13,7 +13,12 @@ function pickSecretSpot() {
 // Reset the game
 function resetGame() {
   cells.forEach((cell, index) => {
-    cell.classList.remove("hit", "miss");
+    if (cell.classList.contains("hit")) {
+      cell.classList.remove("hit");
+    }
+    if (cell.classList.contains("miss")) {
+      cell.classList.remove("miss");
+    }
     cell.innerText = `BS${index + 1}`;
     cell.style.pointerEvents = "auto";
   });
@@ -21,34 +26,23 @@ function resetGame() {
   objective.textContent = "Find the Battleship";
 }
 
-// Handle when a player clicks on a cell
-function handleCellClick(clickEvent) {
-  // Get which cell was clicked (as a number)
-  const clickedCell = clickEvent.target;
-  const allCellsArray = Array.from(cells);
-  const clickedCellNumber = allCellsArray.indexOf(clickedCell);
-
-  // Check if the clicked cell has the battleship
-  if (clickedCellNumber === secretSpot) {
-    // CORRECT GUESS (HIT)
-    clickedCell.classList.add("hit");      // Make cell green
-    clickedCell.textContent = "Hit!";     // Show "Hit!" text
-    objective.textContent = "You sunk the battleship! 🎉";
-    
-    // Disable all cells (game over)
-    cells.forEach(cell => {
-      cell.style.pointerEvents = "none";
-    });
+// Handle cell click
+function handleCellClick(e) {
+  const index = Array.from(cells).indexOf(e.target);
+  if (index === secretSpot) {
+    e.target.classList.add("hit");
+    e.target.innerText = "Hit!";
+    objective.textContent = "You hit the battleship!";
+    // Optionally disable all cells after hit
+    cells.forEach(cell => cell.style.pointerEvents = "none");
   } else {
-    // WRONG GUESS (MISS)
-    clickedCell.classList.add("miss");    // Make cell red
-    clickedCell.textContent = "Miss!";    // Show "Miss!" text
-    objective.textContent = "Keep searching!";
-    
-    // Disable just this cell (can't click it again)
-    clickedCell.style.pointerEvents = "none";
+    e.target.classList.add("miss");
+    e.target.innerText = "Miss!";
+    objective.textContent = "You missed the battleship!";
+    e.target.style.pointerEvents = "none";
   }
 }
+
 // Add event listeners to each cell
 cells.forEach(cell => {
   cell.addEventListener("click", handleCellClick);
